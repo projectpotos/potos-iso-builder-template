@@ -1,0 +1,10 @@
+# Fedora source ISOs and checksums — large binaries, not tracked
+input/*.iso
+input/*CHECKSUM
+
+# Built collection tarballs
+input/collections/
+
+# Build output
+output/*
+!output/.gitkeep

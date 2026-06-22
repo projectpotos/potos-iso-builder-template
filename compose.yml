@@ -1,0 +1,23 @@
+---
+services:
+  builder:
+    image: ghcr.io/projectpotos/potos-iso-builder:v1.0.0
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - apparmor=unconfined
+    device_cgroup_rules:
+      - "b 7:* rmw"
+    devices:
+      - /dev/loop-control
+    volumes:
+      - /dev:/dev
+      - ./input:/input:ro
+      - ./output:/output:z
+    command:
+      - --config
+      - /input/config.yml
+      - --input-dir
+      - /input
+      - --output-dir
+      - /output

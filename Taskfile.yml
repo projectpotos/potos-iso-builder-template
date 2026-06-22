@@ -1,0 +1,39 @@
+---
+version: "3"
+
+vars:
+  COLLECTION_PATH: '{{.COLLECTION_PATH | default "../ansible-collection-potos.base"}}'
+  SOURCE_DATE_EPOCH:
+    sh: git log -1 --format=%ct 2>/dev/null || true
+  POTOS_BUILD_REF:
+    sh: git describe --tags --always --dirty 2>/dev/null || true
+
+tasks:
+  build:collection:
+    desc: Build the potos.base collection tarball and stage it under input/collections/
+    cmds:
+      - |
+        OUT="{{.INPUT_DIR | default "input"}}/collections"
+        if [ ! -f {{.COLLECTION_PATH}}/galaxy.yml ]; then
+          echo "build:collection: {{.COLLECTION_PATH}}/galaxy.yml not found, skipping"
+          exit 0
+        fi
+        mkdir -p "${OUT}"
+        rm -f "${OUT}"/potos-base-*.tar.gz
+        ansible-galaxy collection build {{.COLLECTION_PATH}} --output-path "${OUT}" --force
+
+  build:
+    desc: Build the custom Fedora ISO (./input -> ./output)
+    cmds:
+      - >-
+        SOURCE_DATE_EPOCH={{.SOURCE_DATE_EPOCH}}
+        POTOS_BUILD_REF={{.POTOS_BUILD_REF}}
+        POTOS_INPUT=./{{.INPUT_DIR | default "input"}}
+        POTOS_OUTPUT=./{{.OUTPUT_DIR | default "output"}}
+        docker compose run --rm builder
+
+  build:all:
+    desc: Build the potos.base collection tarball (if available) and then the ISO
+    cmds:
+      - task: build:collection
+      - task: build

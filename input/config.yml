@@ -1,0 +1,18 @@
+---
+client_name:
+  short: "potos"
+  long: "Potos Linux Client"
+
+fedora_version: 44
+
+input:
+  iso_filename: "Fedora-Server-dvd-x86_64-44-1.7.iso"
+  checksum_filename: "Fedora-Server-44-1.7-x86_64-CHECKSUM"
+
+output:
+  version: "1.0"
+  iso_filename: "potos-installer.iso"
+
+specs:
+  url: ""
+  branch: "main"
