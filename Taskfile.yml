@@ -10,7 +10,7 @@ vars:
 
 tasks:
   build:collection:
-    desc: Build the potos.base collection tarball and stage it under input/collections/
+    desc: Build the projectpotos.base collection tarball and stage it under input/collections/
     cmds:
       - |
         OUT="{{.INPUT_DIR | default "input"}}/collections"
@@ -19,7 +19,7 @@ tasks:
           exit 0
         fi
         mkdir -p "${OUT}"
-        rm -f "${OUT}"/potos-base-*.tar.gz
+        rm -f "${OUT}"/projectpotos-base-*.tar.gz
         ansible-galaxy collection build {{.COLLECTION_PATH}} --output-path "${OUT}" --force
 
   build:
@@ -33,7 +33,7 @@ tasks:
         docker compose run --rm builder
 
   build:all:
-    desc: Build the potos.base collection tarball (if available) and then the ISO
+    desc: Build the projectpotos.base collection tarball (if available) and then the ISO
     cmds:
       - task: build:collection
       - task: build
