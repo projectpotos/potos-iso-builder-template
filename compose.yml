@@ -1,7 +1,7 @@
 ---
 services:
   builder:
-    image: ghcr.io/projectpotos/potos-iso-builder:v4.0.0-rc.1
+    image: ghcr.io/projectpotos/potos-iso-builder:4.0.0-rc.1
     cap_add:
       - SYS_ADMIN
     security_opt:
