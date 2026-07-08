@@ -8,3 +8,6 @@ input/collections/
 # Build output
 output/*
 !output/.gitkeep
+
+# Generated Secure Boot vars store for the test VM (test:bootstrap)
+test/OVMF_VARS.secboot.4m.fd

@@ -37,3 +37,27 @@ tasks:
     cmds:
       - task: build:collection
       - task: build
+
+  test:bootstrap:
+    desc: Install the built ISO into a local libvirt test VM (Secure Boot + emulated TPM2)
+    cmds:
+      - ./test/bootstrap.sh
+
+  test:enroll-mok:
+    desc: Enroll the test VM's Secure Boot MOK non-interactively
+    summary: |
+      Workaround for when the interactive MokManager prompt on first boot times
+      out and throws a shim Security Violation (0x1A).
+    cmds:
+      - ./test/enroll-mok.sh {{.CLI_ARGS}}
+
+  test:teardown:
+    desc: Destroy the test VM and clean up its storage and nvram
+    cmds:
+      - ./test/teardown.sh
+
+  build-and-bootstrap:
+    desc: Build the ISO and install it into the test VM
+    cmds:
+      - task: build:all
+      - task: test:bootstrap
